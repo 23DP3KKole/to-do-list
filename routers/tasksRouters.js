@@ -2,6 +2,8 @@ const express = require('express')
 const {
     createTask,
     getTasks,
+    deleteTask,
+    updateTask
 } = require('../controllers/taskController')
 
 const router = express.Router()
@@ -12,9 +14,9 @@ router.get('/tasks', getTasks)
 
 router.post('/tasks', createTask)
 
-router.delete('tasks/:id', (req, res) =>{
-    res.json({mssg: 'DELETE a workout'})
-})
+router.delete('/tasks/:id', deleteTask)
+
+router.patch('/tasks/:id', updateTask)
 
 function logger(req, res, next){
     console.log(req.originalUrl)
