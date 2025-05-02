@@ -5,6 +5,25 @@
     box-sizing: border-box;
 }
 
+form {
+    max-width: 400px;
+    margin: 0 auto 20px;
+    background-color: #ffffff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgb(255, 255, 255);
+}
+
+input, textarea, button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    box-sizing: border-box;
+  }
+
 .container{
     width: 100;
     min-height: 100vh;
@@ -21,15 +40,15 @@
     border-radius: 10px;
 }
 
-.todo-app h2{
+.todo-app h1{
+    align-items: center;
+}
+
+.todo-app h3{
     color: #002765;
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-}
-.todo-app h2 img{
-    width: 30px;
-    margin-left: 10 px;
 }
 
 .row{
@@ -80,24 +99,6 @@ ul li::before{
     left: 8px;
 }
 
-ul li.checked{
-    color: #555;
-    text-decoration: line-through;
-}
-ul li.checked::before{
-    background-image: url(/public/img/checked.png);
-}
-ul li span{
-    position: absolute;
-    right: 0;
-    top: 5px;
-    width: 40px;
-    height: 40px;
-    font-size: 22px;
-    color: #555;
-    line-height: 40px;
-    text-align: center;
-}
-ul li span:hover{
-    background: #edeef0;
+button:hover{
+    background: #c24924;
 }

@@ -1,26 +1,65 @@
-const express = require('express')
-const {
-    createTask,
-    getTasks,
-    deleteTask,
-    updateTask
-} = require('../controllers/taskController')
+const express = require("express");
+const Task = require("../models/taskModel");
 
-const router = express.Router()
+const router = express.Router();
 
-router.use(logger)
+router.get("/", async (req, res) => {
+  try {
+    const tasks = await Task.find();
+    res.json(tasks);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
-router.get('/tasks', getTasks)
+router.post("/", async (req, res) => {
+  const { title, description } = req.body;
 
-router.post('/tasks', createTask)
+  if (!title) {
+    return res.status(400).json({ message: "Title is required" });
+  }
 
-router.delete('/tasks/:id', deleteTask)
+  try {
+    const newTask = new Task({ title, description });
+    await newTask.save();
+    res.status(201).json(newTask);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
-router.patch('/tasks/:id', updateTask)
+router.put("/:id", async (req, res) => {
+  const { title, description, status } = req.body;
 
-function logger(req, res, next){
-    console.log(req.originalUrl)
-    next()
-}
+  try {
+    const updatedTask = await Task.findByIdAndUpdate(
+      req.params.id,
+      { title, description, status },
+      { new: true }
+    );
 
-module.exports = router
+    if (!updatedTask) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    res.json(updatedTask);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const deletedTask = await Task.findByIdAndDelete(req.params.id);
+
+    if (!deletedTask) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    res.json({ message: "Task deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+module.exports = router;
